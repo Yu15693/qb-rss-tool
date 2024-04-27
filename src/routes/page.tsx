@@ -1,7 +1,12 @@
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+
 const Index = () => (
-  <div>
-    <main>Hello,world</main>
-  </div>
+  <Box>
+    <Typography>Hello,world</Typography>
+    <Button variant="contained">sample button</Button>
+  </Box>
 );
 
 export default Index;
