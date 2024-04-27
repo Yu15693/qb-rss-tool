@@ -10,4 +10,7 @@ export default defineConfig({
       bundler: 'webpack', // Set to 'experimental-rspack' to enable rspack ⚡️🦀
     }),
   ],
+  server: {
+    port: 3000,
+  },
 });
