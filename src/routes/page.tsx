@@ -1,12 +1,17 @@
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { invoke } from '@tauri-apps/api';
+import { useEffect } from 'react';
 
-const Index = () => (
-  <Box>
-    <Typography>Hello,world</Typography>
-    <Button variant="contained">sample button</Button>
-  </Box>
-);
-
-export default Index;
+export default function Index() {
+  useEffect(() => {
+    invoke('greet', { name: 'World' }).then(res => console.log(res));
+  }, []);
+  return (
+    <Box>
+      <Typography>Hello,world</Typography>
+      <Button variant="contained">sample button</Button>
+    </Box>
+  );
+}
