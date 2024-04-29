@@ -1,13 +1,14 @@
-import { Box, Stack } from '@mui/material';
+import { Box, Stack, useTheme } from '@mui/material';
 import { bottomTabItem, tabItemList } from './constant';
 import TabItem from './TabItem';
 
 export default function Sidebar() {
+  const theme = useTheme();
   return (
     <Box
       sx={{
         flexShrink: 0,
-        width: 108,
+        width: 100 + theme.gap(1),
         padding: 2,
         display: 'flex',
         flexDirection: 'column',
