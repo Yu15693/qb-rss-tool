@@ -1,7 +1,6 @@
 import type { PropsWithChildren } from 'react';
-import { ThemeProvider, createTheme } from '@mui/material';
+import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
 import { zhCN } from '@mui/material/locale';
-import CssBaseline from '@mui/material/CssBaseline';
 import '@/assets/css/global.css';
 
 const theme = createTheme(

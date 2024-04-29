@@ -1,6 +1,4 @@
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import { Button, Box, Typography } from '@mui/material';
 import { invoke } from '@tauri-apps/api';
 import { useEffect } from 'react';
 
