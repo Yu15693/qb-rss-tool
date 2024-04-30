@@ -1,23 +1,16 @@
 import { Box, Button, IconButton, Stack, TextField } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { ClearOutlined as IconClearOutlined } from '@mui/icons-material';
-import { useState } from 'react';
-import { RSSFeed, fetchRSS } from '@/utils/rss';
+import { SubItem, useIndexStore } from '../store';
+import { fetchRSS } from '@/utils/rss';
 import { formatTitle } from '@/utils/format';
 
 interface IForm {
   rssUrl: string;
 }
 
-interface SubItem {
-  title: string;
-  mustContain: string;
-  mustNotContain: string;
-  rssFeed: RSSFeed;
-}
-
 export default function IndexHeader() {
-  const [subList, setSubList] = useState<SubItem[]>([]);
+  const indexStore = useIndexStore();
   const { control, handleSubmit } = useForm<IForm>({
     defaultValues: {
       rssUrl: '',
@@ -25,8 +18,15 @@ export default function IndexHeader() {
   });
 
   const onSubmit = (data: IForm) => {
-    console.log(data, subList);
     const { rssUrl } = data;
+
+    if (!rssUrl.startsWith('https://')) {
+      return;
+    }
+    if (indexStore.findSubItem(rssUrl)) {
+      return;
+    }
+
     fetchRSS(rssUrl)
       .then(res => {
         const newSubItem: SubItem = {
@@ -35,11 +35,15 @@ export default function IndexHeader() {
           mustNotContain: '',
           rssFeed: res,
         };
-        setSubList(v => [...v, newSubItem]);
+        indexStore.addSubItem(newSubItem);
       })
       .catch(err => {
-        console.log(err);
+        console.error(err);
       });
+  };
+
+  const onClear = () => {
+    indexStore.clearSubList();
   };
 
   return (
@@ -78,7 +82,7 @@ export default function IndexHeader() {
           新增
         </Button>
         <Button variant="outlined">刷新全部</Button>
-        <Button variant="outlined" color="error">
+        <Button variant="outlined" color="error" onClick={onClear}>
           清空
         </Button>
       </Stack>
