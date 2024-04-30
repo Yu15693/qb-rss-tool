@@ -9,7 +9,7 @@
     "serve": "modern serve",
     "new": "modern new",
     "lint": "modern lint",
-    "prepare": "husky install",
+    "prepare": "husky install | chmod ug+x .husky/*",
     "upgrade": "modern upgrade",
     "tauri": "tauri"
   },
