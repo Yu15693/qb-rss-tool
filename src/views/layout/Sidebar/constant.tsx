@@ -14,6 +14,6 @@ export const tabItemList: TabItemProps[] = [
 
 export const bottomTabItem: TabItemProps = {
   label: '设置',
-  href: '/setting',
+  href: '/settings',
   icon: <IconSettings />,
 };

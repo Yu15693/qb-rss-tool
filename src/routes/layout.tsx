@@ -1,7 +1,7 @@
 import { Outlet } from '@modern-js/runtime/router';
 import { Box } from '@mui/material';
-import Theme from './theme';
-import Sidebar from '@/components/Sidebar';
+import Theme from '@/views/layout/Theme';
+import Sidebar from '@/views/layout/Sidebar';
 
 export default function Layout() {
   return (

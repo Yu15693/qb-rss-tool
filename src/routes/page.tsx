@@ -6,7 +6,7 @@ interface IForm {
   rssUrl: string;
 }
 
-export default function Index() {
+export default function IndexPage() {
   const { control, handleSubmit } = useForm<IForm>({
     defaultValues: {
       rssUrl: '',
