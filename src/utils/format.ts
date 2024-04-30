@@ -4,6 +4,6 @@ export function formatTitle(title: string) {
   if (title.startsWith(mikanStartStr)) {
     temp = title.split(mikanStartStr)[1];
   }
-  temp = temp.replace(/[\\/:*?<>|]/g, ' ');
+  temp = temp.replace(/[\\/:*?<>|"]/g, ' ');
   return temp;
 }
