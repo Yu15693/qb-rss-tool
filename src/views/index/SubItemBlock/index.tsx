@@ -12,7 +12,17 @@ export default function SubItemBlock() {
     <Box height="100%">
       <ListSubheader>
         配置详情
-        <Tooltip title={'通配符模式'}>
+        <Tooltip
+          title={
+            <Box>
+              <Box>通配符模式：规则与qb内保持一致</Box>
+              <Box>? 匹配任意单个字符</Box>
+              <Box>* 匹配0个或多个任意字符</Box>
+              <Box>空格 与运算符</Box>
+              <Box>| 或运算符</Box>
+            </Box>
+          }
+        >
           <IconButton size="small" sx={{ marginLeft: 0.5 }}>
             <IconHelp />
           </IconButton>
