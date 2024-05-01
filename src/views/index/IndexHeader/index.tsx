@@ -24,7 +24,7 @@ const urlRegExp =
 export default function IndexHeader() {
   const { enqueueSnackbar } = useSnackbar();
   const indexStore = useIndexStore();
-  const { control, handleSubmit } = useForm<IForm>({
+  const { control, handleSubmit, setValue } = useForm<IForm>({
     defaultValues: {
       rssUrl: '',
     },
@@ -39,9 +39,11 @@ export default function IndexHeader() {
             link: rssUrl,
             mustContain: '',
             mustNotContain: '',
+            useRegex: false,
             rssFeed: res,
           };
           indexStore.addSubItem(newSubItem);
+          setValue('rssUrl', '');
         })
         .catch(err => {
           console.error(err);

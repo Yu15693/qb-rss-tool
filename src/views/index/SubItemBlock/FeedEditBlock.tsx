@@ -1,4 +1,11 @@
-import { Box, Stack, Typography, IconButton, TextField } from '@mui/material';
+import {
+  Box,
+  Stack,
+  Typography,
+  IconButton,
+  TextField,
+  Checkbox,
+} from '@mui/material';
 import { useDebounceFn } from 'ahooks';
 import { useSnackbar } from 'notistack';
 import { useState, useEffect } from 'react';
@@ -19,7 +26,7 @@ export default function FeedEditBlock() {
     (link: string, value: typeof tempValue) => {
       indexStore.editSubItem(link, value);
     },
-    { wait: 100 },
+    { wait: 200 },
   );
 
   const changeTempValue = (value: Partial<typeof tempValue>) => {
@@ -78,16 +85,31 @@ export default function FeedEditBlock() {
       <TextField
         label="标题"
         type="text"
+        size="small"
         inputProps={{ maxLength: 100 }}
         fullWidth
         value={tempValue.title}
         onChange={e => changeTempValue({ title: e.target.value })}
-        sx={{ marginBottom: 2 }}
       />
+
+      <Typography marginY={1} variant="body2">
+        <Checkbox
+          size="small"
+          checked={selectedSubItem.useRegex}
+          onChange={e => {
+            indexStore.editSubItem(selectedSubItem.link, {
+              useRegex: e.target.checked,
+            });
+          }}
+        />
+        使用正则表达式
+      </Typography>
+
       <Stack direction="row" gap={2}>
         <TextField
           label="必须包含"
           type="text"
+          size="small"
           inputProps={{ maxLength: 100 }}
           fullWidth
           value={tempValue.mustContain}
@@ -96,6 +118,7 @@ export default function FeedEditBlock() {
         <TextField
           label="必须不含"
           type="text"
+          size="small"
           inputProps={{ maxLength: 100 }}
           fullWidth
           value={tempValue.mustNotContain}

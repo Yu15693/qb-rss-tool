@@ -25,12 +25,22 @@ function wildcardMatch(rule: string, title: string) {
     regExp = new RegExp(regExp.source.substring(1, regExp.source.length - 1));
   }
 
+  console.log(regExp, title);
+
   return regExp.test(title);
 }
 
-export function mustContainMatch(rule: string, title: string) {
+export function mustContainMatch(
+  useRegex: boolean,
+  rule: string,
+  title: string,
+) {
   if (!rule) {
     return true;
+  }
+
+  if (useRegex) {
+    return new RegExp(rule).test(title);
   }
 
   const expList = rule.split('|');
@@ -45,9 +55,17 @@ export function mustContainMatch(rule: string, title: string) {
   });
 }
 
-export function mustNotContainMatch(rule: string, title: string) {
+export function mustNotContainMatch(
+  useRegex: boolean,
+  rule: string,
+  title: string,
+) {
   if (!rule) {
     return true;
+  }
+
+  if (useRegex) {
+    return !new RegExp(rule).test(title);
   }
 
   const expList = rule.split('|');

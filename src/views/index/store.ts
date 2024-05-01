@@ -7,6 +7,7 @@ export interface SubItem {
   link: string;
   mustContain: string;
   mustNotContain: string;
+  useRegex: boolean;
   rssFeed: RSSFeed;
 }
 
