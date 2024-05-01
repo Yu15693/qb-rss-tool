@@ -12,7 +12,7 @@ import { useIndexStore } from '../store';
 export default function SubItemList() {
   const indexStore = useIndexStore();
   const subItemListJSX = indexStore.subList.map(v => {
-    const { link } = v.rssFeed;
+    const { link } = v;
     return (
       <ListItem
         key={link}

@@ -4,6 +4,7 @@ import { RSSFeed } from '@/utils/rss';
 
 export interface SubItem {
   title: string;
+  link: string;
   mustContain: string;
   mustNotContain: string;
   rssFeed: RSSFeed;
@@ -37,7 +38,7 @@ export const useIndexStore = create<IndexState>()(
           set({ subList: newSubList });
         },
         removeSubItem(link) {
-          const newSubList = get().subList.filter(v => v.rssFeed.link !== link);
+          const newSubList = get().subList.filter(v => v.link !== link);
           if (link === this.selectedLink) {
             set({
               selectedLink: '',
@@ -51,7 +52,7 @@ export const useIndexStore = create<IndexState>()(
           set({ subList: [], selectedLink: '' });
         },
         findSubItem(link) {
-          return get().subList.find(v => v.rssFeed.link === link);
+          return get().subList.find(v => v.link === link);
         },
       };
     },
