@@ -11,6 +11,8 @@ export interface SubItem {
 
 interface IndexState {
   subList: SubItem[];
+  selectedLink: string;
+  setLink: (link: string) => void;
   addSubItem: (subItem: SubItem) => void;
   removeSubItem: (link: string) => void;
   clearSubList: () => void;
@@ -24,18 +26,29 @@ export const useIndexStore = create<IndexState>()(
     (set, get) => {
       return {
         subList: [],
+        selectedLink: '',
+        setLink(link) {
+          set({
+            selectedLink: link,
+          });
+        },
         addSubItem(subItem: SubItem) {
           const newSubList = [...get().subList, subItem];
           set({ subList: newSubList });
         },
         removeSubItem(link) {
           const newSubList = get().subList.filter(v => v.rssFeed.link !== link);
+          if (link === this.selectedLink) {
+            set({
+              selectedLink: '',
+            });
+          }
           set({
             subList: newSubList,
           });
         },
         clearSubList() {
-          set({ subList: [] });
+          set({ subList: [], selectedLink: '' });
         },
         findSubItem(link) {
           return get().subList.find(v => v.rssFeed.link === link);

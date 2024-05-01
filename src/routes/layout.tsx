@@ -8,7 +8,7 @@ export default function Layout() {
     <Theme>
       <Box sx={{ height: '100vh', width: '100%', display: 'flex' }}>
         <Sidebar />
-        <Box sx={{ padding: 2, flex: 1 }}>
+        <Box sx={{ paddingX: 2, paddingTop: 2, flex: 1 }}>
           <Outlet />
         </Box>
       </Box>
