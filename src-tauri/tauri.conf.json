@@ -17,6 +17,17 @@
         "all": false,
         "request": true,
         "scope": ["https://*"]
+      },
+      "dialog": {
+        "all": false,
+        "open": true
+      },
+      "fs": {
+        "all": false,
+        "exists": true,
+        "createDir": true,
+        "writeFile": true,
+        "scope": []
       }
     },
     "bundle": {

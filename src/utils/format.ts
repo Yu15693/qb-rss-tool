@@ -1,12 +1,14 @@
 import { minimatch } from 'minimatch';
 
+export const fileNameLimitRegExp = /[\\/:*?<>|"]/g;
+
 export function formatTitle(title: string) {
   let temp = title;
   const mikanStartStr = 'Mikan Project - ';
   if (title.startsWith(mikanStartStr)) {
     temp = title.split(mikanStartStr)[1];
   }
-  temp = temp.replace(/[\\/:*?<>|"]/g, ' ');
+  temp = temp.replace(fileNameLimitRegExp, ' ');
   return temp;
 }
 
@@ -24,8 +26,6 @@ function wildcardMatch(rule: string, title: string) {
   if (regExp.source.startsWith('^') && regExp.source.endsWith('$')) {
     regExp = new RegExp(regExp.source.substring(1, regExp.source.length - 1));
   }
-
-  console.log(regExp, title);
 
   return regExp.test(title);
 }

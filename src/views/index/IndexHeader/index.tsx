@@ -11,7 +11,7 @@ import { ClearOutlined as IconClearOutlined } from '@mui/icons-material';
 import { useSnackbar } from 'notistack';
 import { useRequest } from 'ahooks';
 import { SubItem, useIndexStore } from '../store';
-import { fetchRSS } from '@/utils/rss';
+import { exportRuleFile, fetchRSS } from '@/utils/rss';
 import { formatTitle } from '@/utils/format';
 
 interface IForm {
@@ -51,6 +51,29 @@ export default function IndexHeader() {
             message: `请求失败:${err.message ?? err}`,
             variant: 'error',
           });
+        });
+    },
+    {
+      manual: true,
+    },
+  );
+
+  const { runAsync: doExportData, loading: exportDataLoading } = useRequest(
+    () => {
+      return exportRuleFile(indexStore.subList)
+        .then(res => {
+          res &&
+            enqueueSnackbar({
+              message: res,
+              variant: 'success',
+            });
+        })
+        .catch(err => {
+          err &&
+            enqueueSnackbar({
+              message: `${err}`,
+              variant: 'error',
+            });
         });
     },
     {
@@ -124,6 +147,16 @@ export default function IndexHeader() {
         <Button variant="outlined">刷新全部</Button>
         <Button variant="outlined" color="error" onClick={onClear}>
           清空
+        </Button>
+        <Button variant="outlined">导入数据</Button>
+        <Button
+          variant="outlined"
+          onClick={() => {
+            doExportData();
+          }}
+        >
+          {exportDataLoading && <CircularProgress size={20} />}
+          导出数据
         </Button>
       </Stack>
     </Box>
