@@ -1,7 +1,15 @@
-import { Box, Button, IconButton, Stack, TextField } from '@mui/material';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  IconButton,
+  Stack,
+  TextField,
+} from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { ClearOutlined as IconClearOutlined } from '@mui/icons-material';
 import { useSnackbar } from 'notistack';
+import { useRequest } from 'ahooks';
 import { SubItem, useIndexStore } from '../store';
 import { fetchRSS } from '@/utils/rss';
 import { formatTitle } from '@/utils/format';
@@ -22,6 +30,32 @@ export default function IndexHeader() {
     },
   });
 
+  const { runAsync: doFetchRSS, loading: fetchLoading } = useRequest(
+    (rssUrl: string) => {
+      return fetchRSS(rssUrl)
+        .then(res => {
+          const newSubItem: SubItem = {
+            title: formatTitle(res.title),
+            link: rssUrl,
+            mustContain: '',
+            mustNotContain: '',
+            rssFeed: res,
+          };
+          indexStore.addSubItem(newSubItem);
+        })
+        .catch(err => {
+          console.error(err);
+          enqueueSnackbar({
+            message: `请求失败:${err.message ?? err}`,
+            variant: 'error',
+          });
+        });
+    },
+    {
+      manual: true,
+    },
+  );
+
   const onSubmit = (data: IForm) => {
     // TODO: record log
     const { rssUrl } = data;
@@ -41,24 +75,7 @@ export default function IndexHeader() {
       return;
     }
 
-    fetchRSS(rssUrl)
-      .then(res => {
-        const newSubItem: SubItem = {
-          title: formatTitle(res.title),
-          link: rssUrl,
-          mustContain: '',
-          mustNotContain: '',
-          rssFeed: res,
-        };
-        indexStore.addSubItem(newSubItem);
-      })
-      .catch(err => {
-        console.error(err);
-        enqueueSnackbar({
-          message: `请求失败:${err.message ?? err}`,
-          variant: 'error',
-        });
-      });
+    doFetchRSS(rssUrl);
   };
 
   const onClear = () => {
@@ -98,7 +115,8 @@ export default function IndexHeader() {
         }}
       />
       <Stack direction="row" spacing={2} flexShrink={0} paddingY={0.5}>
-        <Button variant="contained" type="submit">
+        <Button variant="contained" type="submit" disabled={fetchLoading}>
+          {fetchLoading && <CircularProgress size={20} />}
           新增
         </Button>
         <Button variant="outlined">刷新全部</Button>
