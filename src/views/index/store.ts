@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import { RSSFeed } from '@/utils/rss';
 
 export interface SubItem {
@@ -11,40 +12,38 @@ export interface SubItem {
 interface IndexState {
   subList: SubItem[];
   addSubItem: (subItem: SubItem) => void;
-  findSubItem: (link: string) => SubItem | undefined;
+  removeSubItem: (link: string) => void;
   clearSubList: () => void;
+  findSubItem: (link: string) => SubItem | undefined;
 }
 
-const subItemStorageKey = 'sub-item-storage';
+const indexStoreStorageKey = 'index-store-storage';
 
-export const useIndexStore = create<IndexState>(set => {
-  let subList: SubItem[] = [];
-  const initSubListStr = localStorage.getItem(subItemStorageKey);
-  if (initSubListStr) {
-    try {
-      subList = JSON.parse(initSubListStr);
-    } catch (err) {
-      console.error(err);
-    }
-  }
-  const syncStorage = (subList: SubItem[]) => {
-    localStorage.setItem(subItemStorageKey, JSON.stringify(subList));
-  };
-  return {
-    subList,
-    addSubItem(subItem: SubItem) {
-      set(state => {
-        const newSubList = [...state.subList, subItem];
-        syncStorage(newSubList);
-        return { subList: newSubList };
-      });
+export const useIndexStore = create<IndexState>()(
+  persist(
+    (set, get) => {
+      return {
+        subList: [],
+        addSubItem(subItem: SubItem) {
+          const newSubList = [...get().subList, subItem];
+          set({ subList: newSubList });
+        },
+        removeSubItem(link) {
+          const newSubList = get().subList.filter(v => v.rssFeed.link !== link);
+          set({
+            subList: newSubList,
+          });
+        },
+        clearSubList() {
+          set({ subList: [] });
+        },
+        findSubItem(link) {
+          return get().subList.find(v => v.rssFeed.link === link);
+        },
+      };
     },
-    clearSubList() {
-      syncStorage([]);
-      set({ subList: [] });
+    {
+      name: indexStoreStorageKey,
     },
-    findSubItem(link) {
-      return subList.find(v => v.rssFeed.link === link);
-    },
-  };
-});
+  ),
+);
