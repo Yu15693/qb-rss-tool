@@ -1,19 +1,10 @@
-import {
-  Box,
-  Stack,
-  Typography,
-  IconButton,
-  TextField,
-  Checkbox,
-} from '@mui/material';
+import { Box, Stack, Typography, TextField, Checkbox } from '@mui/material';
 import { useDebounceFn } from 'ahooks';
-import { useSnackbar } from 'notistack';
 import { useState, useEffect } from 'react';
-import { ContentCopy as IconCopy } from '@mui/icons-material';
 import { useIndexStore } from '../store';
+import IconButtonCopy from '@/components/IconButtonCopy';
 
 export default function FeedEditBlock() {
-  const { enqueueSnackbar } = useSnackbar();
   const indexStore = useIndexStore();
   const selectedSubItem = indexStore.findSubItem(indexStore.selectedLink)!;
   const [tempValue, setTempValue] = useState({
@@ -58,28 +49,11 @@ export default function FeedEditBlock() {
           <span style={{ userSelect: 'none' }}>地址：</span>
           <span title={selectedSubItem.link}>{selectedSubItem.link}</span>
         </Typography>
-        <IconButton
-          size="small"
-          title="复制"
-          onClick={() => {
-            navigator.clipboard
-              .writeText(selectedSubItem.link)
-              .then(() => {
-                enqueueSnackbar({
-                  message: '复制成功',
-                  variant: 'success',
-                });
-              })
-              .catch(() => {
-                enqueueSnackbar({
-                  message: '复制失败',
-                  variant: 'success',
-                });
-              });
-          }}
-        >
-          <IconCopy fontSize="small" />
-        </IconButton>
+        <IconButtonCopy
+          key={selectedSubItem.link}
+          copyText={selectedSubItem.link}
+          buttonProps={{ size: 'small' }}
+        />
       </Stack>
 
       <TextField

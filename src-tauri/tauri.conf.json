@@ -28,6 +28,9 @@
         "createDir": true,
         "writeFile": true,
         "scope": []
+      },
+      "clipboard": {
+        "all": true
       }
     },
     "bundle": {

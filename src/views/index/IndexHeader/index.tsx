@@ -11,8 +11,10 @@ import { ClearOutlined as IconClearOutlined } from '@mui/icons-material';
 import { useSnackbar } from 'notistack';
 import { useRequest } from 'ahooks';
 import { SubItem, useIndexStore } from '../store';
-import { exportRuleFile, fetchRSS } from '@/utils/rss';
+import DataButtonGroup from './DataButtonGroup';
+import { fetchRSS } from '@/utils/rss';
 import { formatTitle } from '@/utils/format';
+import IconButtonPaste from '@/components/IconButtonPaste';
 
 interface IForm {
   rssUrl: string;
@@ -51,29 +53,6 @@ export default function IndexHeader() {
             message: `请求失败:${err.message ?? err}`,
             variant: 'error',
           });
-        });
-    },
-    {
-      manual: true,
-    },
-  );
-
-  const { runAsync: doExportData, loading: exportDataLoading } = useRequest(
-    () => {
-      return exportRuleFile(indexStore.subList)
-        .then(res => {
-          res &&
-            enqueueSnackbar({
-              message: res,
-              variant: 'success',
-            });
-        })
-        .catch(err => {
-          err &&
-            enqueueSnackbar({
-              message: `${err}`,
-              variant: 'error',
-            });
         });
     },
     {
@@ -133,7 +112,11 @@ export default function IndexHeader() {
                   >
                     <IconClearOutlined />
                   </IconButton>
-                ) : undefined,
+                ) : (
+                  <IconButtonPaste
+                    onPaste={value => onChange({ target: { value } })}
+                  />
+                ),
               }}
             />
           );
@@ -148,16 +131,7 @@ export default function IndexHeader() {
         <Button variant="outlined" color="error" onClick={onClear}>
           清空
         </Button>
-        <Button variant="outlined">导入数据</Button>
-        <Button
-          variant="outlined"
-          onClick={() => {
-            doExportData();
-          }}
-        >
-          {exportDataLoading && <CircularProgress size={20} />}
-          导出数据
-        </Button>
+        <DataButtonGroup />
       </Stack>
     </Box>
   );
