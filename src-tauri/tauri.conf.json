@@ -48,7 +48,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.yu15693.tauri-mikan",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -58,12 +58,15 @@
         "signingIdentity": null
       },
       "resources": [],
-      "shortDescription": "",
+      "shortDescription": "tauri-mikan",
       "targets": "all",
       "windows": {
         "certificateThumbprint": null,
         "digestAlgorithm": "sha256",
-        "timestampUrl": ""
+        "timestampUrl": "",
+        "wix": {
+          "language": "zh-CN"
+        }
       }
     },
     "security": {
@@ -75,10 +78,11 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
+        "height": 720,
+        "center": true,
         "resizable": true,
         "title": "tauri-mikan",
-        "width": 800
+        "width": 1200
       }
     ]
   }
