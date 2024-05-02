@@ -9,9 +9,11 @@
     "serve": "modern serve",
     "new": "modern new",
     "lint": "modern lint",
-    "prepare": "husky install | chmod ug+x .husky/*",
+    "prepare": "husky install",
     "upgrade": "modern upgrade",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "husky-fix": "chmod ug+x .husky/*",
+    "build-fix": "node ./build.js"
   },
   "engines": {
     "node": ">=16.18.1"

@@ -24,6 +24,8 @@ export default defineConfig({
     },
   },
   output: {
+    polyfill: 'usage',
     disableNodePolyfill: false,
+    disableSourceMap: process.env.NODE_ENV === 'production',
   },
 });
