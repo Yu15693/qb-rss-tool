@@ -32,18 +32,15 @@ export default function DataButtonGroup() {
   );
 
   return (
-    <>
-      <Button variant="outlined">导入数据</Button>
-      <Button
-        variant="outlined"
-        onClick={() => {
-          doExportData();
-        }}
-        disabled={exportDataLoading}
-      >
-        {exportDataLoading && <CircularProgress size={20} />}
-        导出数据
-      </Button>
-    </>
+    <Button
+      variant="outlined"
+      onClick={() => {
+        doExportData();
+      }}
+      disabled={exportDataLoading}
+    >
+      {exportDataLoading && <CircularProgress size={20} />}
+      导出数据
+    </Button>
   );
 }

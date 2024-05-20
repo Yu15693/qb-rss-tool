@@ -1,6 +1,7 @@
+import path from 'path';
 import RSSParser from 'rss-parser';
 import { ResponseType, fetch } from '@tauri-apps/api/http';
-import { open } from '@tauri-apps/api/dialog';
+import { open, confirm } from '@tauri-apps/api/dialog';
 import { writeTextFile, exists, createDir } from '@tauri-apps/api/fs';
 import { fileNameLimitRegExp } from './format';
 import { SubItem } from '@/views/index/store';
@@ -36,13 +37,10 @@ export async function fetchRSS(url: string) {
 }
 
 export async function exportRuleFile(subList: SubItem[]): Promise<string> {
-  const dirPath = await open({
-    directory: true,
-  });
-  if (!dirPath || Array.isArray(dirPath)) {
-    return '';
+  // check rules
+  if (subList.length === 0) {
+    throw new Error('订阅列表为空');
   }
-
   for (const subItem of subList) {
     const { title } = subItem;
     if (!title) {
@@ -57,6 +55,24 @@ export async function exportRuleFile(subList: SubItem[]): Promise<string> {
     throw new Error('标题不能重复');
   }
 
+  // get dir path
+  const dirPath = await open({
+    directory: true,
+  });
+  if (!dirPath || Array.isArray(dirPath)) {
+    return '';
+  }
+  const confirmed = await confirm(`导出路径为 ${dirPath} ,你确定吗？`, {
+    title: '请确认导出路径',
+    type: 'info',
+    okLabel: '确定',
+    cancelLabel: '取消',
+  });
+  if (!confirmed) {
+    return '';
+  }
+
+  // generate rule obj
   const ruleRecord: Record<string, object> = {};
   for (const subItem of subList) {
     const { link, title, mustContain, mustNotContain, useRegex } = subItem;
@@ -72,13 +88,14 @@ export async function exportRuleFile(subList: SubItem[]): Promise<string> {
       mustContain,
       mustNotContain,
       previouslyMatchedEpisodes: [],
-      savePath: `${dirPath}\\${title}`,
+      savePath: path.join(dirPath, title),
       smartFilter: false,
       torrentContentLayout: null,
       useRegex,
     };
   }
 
+  // write files
   const linkText = subList.map(v => `${v.title}\n${v.link}`).join('\n');
   await writeTextFile(`${dirPath}\\rule.json`, JSON.stringify(ruleRecord), {
     append: false,

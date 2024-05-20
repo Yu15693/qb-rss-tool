@@ -7,7 +7,7 @@ export default function IndexPage() {
   return (
     <Box height="100%">
       <IndexHeader />
-      <Grid container height="calc(100% - 56px)">
+      <Grid container height="calc(100% - 60px)">
         <Grid
           item
           xs={4}

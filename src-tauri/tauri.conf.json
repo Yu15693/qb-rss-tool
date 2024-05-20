@@ -20,7 +20,8 @@
       },
       "dialog": {
         "all": false,
-        "open": true
+        "open": true,
+        "confirm": true
       },
       "fs": {
         "all": false,
