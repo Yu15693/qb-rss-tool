@@ -1,4 +1,5 @@
 import { minimatch } from 'minimatch';
+import dayjs from 'dayjs';
 
 export const fileNameLimitRegExp = /[\\/:*?<>|"]/g;
 
@@ -10,6 +11,10 @@ export function formatTitle(title: string) {
   }
   temp = temp.replace(fileNameLimitRegExp, ' ');
   return temp;
+}
+
+export function formatDateTime(ts: number) {
+  return dayjs(ts).format('YYYY-MM-DD HH:mm:ss');
 }
 
 function wildcardMatch(rule: string, title: string) {

@@ -9,6 +9,8 @@ export interface SubItem {
   mustNotContain: string;
   useRegex: boolean;
   rssFeed: RSSFeed;
+  fetchTime: number;
+  fetchStatus: 'success' | 'loading' | 'fail';
 }
 
 interface IndexState {
@@ -74,6 +76,12 @@ export const useIndexStore = create<IndexState>()(
     },
     {
       name: indexStoreStorageKey,
+      version: 1,
     },
   ),
 );
+
+/*
+ version 1
+ Interface SubItem add fields: fetchTime fetchStatus
+*/

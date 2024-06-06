@@ -39,7 +39,7 @@ export default function DataButtonGroup() {
       }}
       disabled={exportDataLoading}
     >
-      {exportDataLoading && <CircularProgress size={20} />}
+      {exportDataLoading && <CircularProgress size={20} sx={{ mr: 1 }} />}
       导出数据
     </Button>
   );

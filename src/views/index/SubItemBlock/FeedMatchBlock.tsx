@@ -67,7 +67,7 @@ export default function FeedMatchBlock() {
 
   return (
     <List
-      sx={{ height: 'calc(100% - 228px)', overflow: 'auto' }}
+      sx={{ height: 'calc(100% - 248px)', overflow: 'auto' }}
       subheader={
         <ListSubheader
           sx={{ display: 'flex', justifyContent: 'space-between' }}

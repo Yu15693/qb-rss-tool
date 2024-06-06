@@ -3,6 +3,7 @@ import { useDebounceFn } from 'ahooks';
 import { useState, useEffect } from 'react';
 import { useIndexStore } from '../store';
 import IconButtonCopy from '@/components/IconButtonCopy';
+import { formatDateTime } from '@/utils/format';
 
 export default function FeedEditBlock() {
   const indexStore = useIndexStore();
@@ -44,8 +45,8 @@ export default function FeedEditBlock() {
 
   return (
     <Box paddingLeft={2}>
-      <Stack direction="row" marginBottom={2} alignItems="center">
-        <Typography variant="body2" color="GrayText" noWrap>
+      <Stack direction="row" alignItems="center">
+        <Typography variant="body2" color="grey" noWrap>
           <span style={{ userSelect: 'none' }}>地址：</span>
           <span title={selectedSubItem.link}>{selectedSubItem.link}</span>
         </Typography>
@@ -55,7 +56,10 @@ export default function FeedEditBlock() {
           buttonProps={{ size: 'small' }}
         />
       </Stack>
-
+      <Typography variant="body2" color="grey" marginBottom={2}>
+        <span style={{ userSelect: 'none' }}>刷新时间：</span>
+        <span>{formatDateTime(selectedSubItem.fetchTime)}</span>
+      </Typography>
       <TextField
         label="标题"
         type="text"

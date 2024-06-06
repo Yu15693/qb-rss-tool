@@ -29,6 +29,9 @@ importers:
       ahooks:
         specifier: ^3.7.11
         version: 3.7.11(react@18.2.0)
+      dayjs:
+        specifier: ^1.11.11
+        version: 1.11.11
       minimatch:
         specifier: ^9.0.4
         version: 9.0.4

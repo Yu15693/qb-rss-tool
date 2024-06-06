@@ -43,6 +43,8 @@ export default function IndexHeader() {
             mustNotContain: '',
             useRegex: false,
             rssFeed: res,
+            fetchTime: new Date().getTime(),
+            fetchStatus: 'success',
           };
           indexStore.addSubItem(newSubItem);
           setValue('rssUrl', '');
@@ -124,7 +126,7 @@ export default function IndexHeader() {
       />
       <Stack direction="row" spacing={2} flexShrink={0} paddingY={0.5}>
         <Button variant="contained" type="submit" disabled={fetchLoading}>
-          {fetchLoading && <CircularProgress size={20} />}
+          {fetchLoading && <CircularProgress size={20} sx={{ mr: 1 }} />}
           新增
         </Button>
         <Button variant="outlined">刷新全部</Button>
