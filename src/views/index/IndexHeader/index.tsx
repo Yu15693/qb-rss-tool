@@ -12,6 +12,7 @@ import { useSnackbar } from 'notistack';
 import { useRequest } from 'ahooks';
 import { SubItem, useIndexStore } from '../store';
 import ExportDataButton from './ExportDataButton';
+import RefreshAllButton from './RefreshAllButton';
 import { fetchRSS } from '@/utils/rss';
 import { formatTitle } from '@/utils/format';
 import IconButtonPaste from '@/components/IconButtonPaste';
@@ -129,7 +130,7 @@ export default function IndexHeader() {
           {fetchLoading && <CircularProgress size={20} sx={{ mr: 1 }} />}
           新增
         </Button>
-        <Button variant="outlined">刷新全部</Button>
+        <RefreshAllButton />
         <Button variant="outlined" color="error" onClick={onClear}>
           清空
         </Button>

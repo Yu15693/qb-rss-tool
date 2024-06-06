@@ -29,7 +29,7 @@ const rssParser = new RSSParser();
 export async function fetchRSS(url: string) {
   const res = await fetch<string>(url, {
     method: 'GET',
-    timeout: 10000,
+    timeout: 20000,
     responseType: ResponseType.Text,
   });
   const rssObj = await rssParser.parseString(res.data);

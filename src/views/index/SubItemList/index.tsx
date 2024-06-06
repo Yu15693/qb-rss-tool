@@ -3,10 +3,16 @@ import {
   List,
   ListItem,
   ListItemButton,
+  ListItemIcon,
   ListItemText,
   ListSubheader,
 } from '@mui/material';
-import { Delete as IconDelete } from '@mui/icons-material';
+import {
+  Delete as IconDelete,
+  CheckCircleOutline as IconCheck,
+  PendingOutlined as IconPending,
+  HighlightOff as IconFail,
+} from '@mui/icons-material';
 import { useIndexStore } from '../store';
 
 export default function SubItemList() {
@@ -31,6 +37,11 @@ export default function SubItemList() {
           selected={indexStore.selectedLink === link}
           onClick={() => indexStore.setLink(link)}
         >
+          <ListItemIcon sx={{ minWidth: 30 }}>
+            {v.fetchStatus === 'success' && <IconCheck />}
+            {v.fetchStatus === 'loading' && <IconPending />}
+            {v.fetchStatus === 'fail' && <IconFail />}
+          </ListItemIcon>
           <ListItemText
             title={v.title}
             primary={v.title}
