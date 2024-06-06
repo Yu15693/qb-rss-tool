@@ -5,6 +5,13 @@ export default defineConfig({
   runtime: {
     router: true,
   },
+  source: {
+    globalVars: {
+      __APP_NAME__: process.env.npm_package_name,
+      __APP_VERSION__: process.env.npm_package_version,
+      __APP_REPOSITORY__: process.env.npm_package_repository,
+    },
+  },
   plugins: [
     appTools({
       bundler: 'webpack', // Set to 'experimental-rspack' to enable rspack ⚡️🦀

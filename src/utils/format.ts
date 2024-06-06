@@ -1,5 +1,5 @@
 import { minimatch } from 'minimatch';
-import dayjs from 'dayjs';
+import dayjs from './dayjs';
 
 export const fileNameLimitRegExp = /[\\/:*?<>|"]/g;
 
