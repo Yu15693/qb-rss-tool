@@ -11,7 +11,7 @@ import { ClearOutlined as IconClearOutlined } from '@mui/icons-material';
 import { useSnackbar } from 'notistack';
 import { useRequest } from 'ahooks';
 import { SubItem, useIndexStore } from '../store';
-import DataButtonGroup from './DataButtonGroup';
+import ExportDataButton from './ExportDataButton';
 import { fetchRSS } from '@/utils/rss';
 import { formatTitle } from '@/utils/format';
 import IconButtonPaste from '@/components/IconButtonPaste';
@@ -133,7 +133,7 @@ export default function IndexHeader() {
         <Button variant="outlined" color="error" onClick={onClear}>
           清空
         </Button>
-        <DataButtonGroup />
+        <ExportDataButton />
       </Stack>
     </Box>
   );

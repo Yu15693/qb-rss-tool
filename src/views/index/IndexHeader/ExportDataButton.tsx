@@ -4,7 +4,7 @@ import { useSnackbar } from 'notistack';
 import { useIndexStore } from '../store';
 import { exportRuleFile } from '@/utils/rss';
 
-export default function DataButtonGroup() {
+export default function ExportDataButton() {
   const { enqueueSnackbar } = useSnackbar();
   const subList = useIndexStore(state => state.subList);
 
@@ -34,9 +34,7 @@ export default function DataButtonGroup() {
   return (
     <Button
       variant="outlined"
-      onClick={() => {
-        doExportData();
-      }}
+      onClick={doExportData}
       disabled={exportDataLoading}
     >
       {exportDataLoading && <CircularProgress size={20} sx={{ mr: 1 }} />}
