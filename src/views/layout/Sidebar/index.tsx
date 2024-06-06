@@ -1,5 +1,5 @@
 import { Box, Stack, useTheme } from '@mui/material';
-import { bottomTabItem, tabItemList } from './constant';
+import { bottomTabItemList, tabItemList } from './constant';
 import TabItem from './TabItem';
 
 export default function Sidebar() {
@@ -22,9 +22,11 @@ export default function Sidebar() {
           <TabItem key={v.href} {...v} />
         ))}
       </Stack>
-      <Box sx={{ flexShrink: 0 }}>
-        <TabItem {...bottomTabItem} />
-      </Box>
+      <Stack direction="column" spacing={2} sx={{ flexShrink: 0 }}>
+        {bottomTabItemList.map(v => (
+          <TabItem key={v.href} {...v} />
+        ))}
+      </Stack>
     </Box>
   );
 }
