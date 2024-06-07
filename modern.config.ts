@@ -28,6 +28,23 @@ export default defineConfig({
           https: false,
         },
       },
+      module: {
+        rules: [
+          // mdx
+          {
+            test: /\.mdx?$/,
+            use: [
+              {
+                loader: '@mdx-js/loader',
+                /** @type {import('@mdx-js/loader').Options} */
+                options: {
+                  /* jsxImportSource: …, otherOptions… */
+                },
+              },
+            ],
+          },
+        ],
+      },
     },
   },
   output: {
