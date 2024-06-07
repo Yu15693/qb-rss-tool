@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-interface AuthConfig {
+export interface AuthConfig {
   ip: string;
   port: string;
   username: string;

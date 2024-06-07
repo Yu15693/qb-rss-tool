@@ -16,7 +16,7 @@
       "http": {
         "all": false,
         "request": true,
-        "scope": ["https://*"]
+        "scope": ["https://*", "http://*"]
       },
       "dialog": {
         "all": false,

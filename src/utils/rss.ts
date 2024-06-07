@@ -6,6 +6,22 @@ import { writeTextFile, exists, createDir } from '@tauri-apps/api/fs';
 import { fileNameLimitRegExp } from './format';
 import { SubItem } from '@/views/index/store';
 
+export interface RSSDownloadRule {
+  enabled: boolean;
+  mustContain: string;
+  mustNotContain: string;
+  useRegex: boolean;
+  episodeFilter: string;
+  smartFilter: boolean;
+  previouslyMatchedEpisodes: any[];
+  affectedFeeds: string[];
+  ignoreDays: number;
+  lastMatch: string;
+  addPaused: boolean;
+  assignedCategory: string;
+  savePath: string;
+}
+
 export interface RSSFeed {
   title: string;
   description: string;
@@ -32,6 +48,9 @@ export async function fetchRSS(url: string) {
     timeout: 20000,
     responseType: ResponseType.Text,
   });
+  if (!res.ok) {
+    throw new Error(res.data);
+  }
   const rssObj = await rssParser.parseString(res.data);
   return rssObj as unknown as RSSFeed;
 }
@@ -76,8 +95,8 @@ export async function exportRuleFile(subList: SubItem[]): Promise<string> {
   const ruleRecord: Record<string, object> = {};
   for (const subItem of subList) {
     const { link, title, mustContain, mustNotContain, useRegex } = subItem;
-    ruleRecord[title] = {
-      addPaused: null,
+    const rule: RSSDownloadRule = {
+      addPaused: false,
       affectedFeeds: [link],
       assignedCategory: '',
       enabled: true,
@@ -90,9 +109,9 @@ export async function exportRuleFile(subList: SubItem[]): Promise<string> {
       previouslyMatchedEpisodes: [],
       savePath: path.join(dirPath, title),
       smartFilter: false,
-      torrentContentLayout: null,
       useRegex,
     };
+    ruleRecord[title] = rule;
   }
 
   // write files
