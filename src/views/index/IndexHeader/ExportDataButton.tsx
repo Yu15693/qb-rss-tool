@@ -3,14 +3,16 @@ import { useRequest } from 'ahooks';
 import { useSnackbar } from 'notistack';
 import { useIndexStore } from '../store';
 import { exportRuleFile } from '@/utils/rss';
+import { useSettingsStore } from '@/views/settings/store';
 
 export default function ExportDataButton() {
   const { enqueueSnackbar } = useSnackbar();
+  const authConfig = useSettingsStore(state => state.authConfig);
   const subList = useIndexStore(state => state.subList);
 
   const { runAsync: doExportData, loading: exportDataLoading } = useRequest(
     () => {
-      return exportRuleFile(subList)
+      return exportRuleFile(authConfig, subList)
         .then(res => {
           res &&
             enqueueSnackbar({
@@ -38,7 +40,7 @@ export default function ExportDataButton() {
       disabled={exportDataLoading}
     >
       {exportDataLoading && <CircularProgress size={20} sx={{ mr: 1 }} />}
-      导出数据
+      注入数据
     </Button>
   );
 }

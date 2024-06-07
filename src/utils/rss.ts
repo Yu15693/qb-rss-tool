@@ -2,9 +2,12 @@ import path from 'path';
 import RSSParser from 'rss-parser';
 import { ResponseType, fetch } from '@tauri-apps/api/http';
 import { open, confirm } from '@tauri-apps/api/dialog';
-import { writeTextFile, exists, createDir } from '@tauri-apps/api/fs';
+import { exists, createDir } from '@tauri-apps/api/fs';
+import * as _ from 'lodash-es';
 import { fileNameLimitRegExp } from './format';
+import { QbApiWrapper } from './qb-api';
 import { SubItem } from '@/views/index/store';
+import { AuthConfig } from '@/views/settings/store';
 
 export interface RSSDownloadRule {
   enabled: boolean;
@@ -55,7 +58,10 @@ export async function fetchRSS(url: string) {
   return rssObj as unknown as RSSFeed;
 }
 
-export async function exportRuleFile(subList: SubItem[]): Promise<string> {
+export async function exportRuleFile(
+  authConfig: AuthConfig,
+  subList: SubItem[],
+): Promise<string> {
   // check rules
   if (subList.length === 0) {
     throw new Error('订阅列表为空');
@@ -72,6 +78,28 @@ export async function exportRuleFile(subList: SubItem[]): Promise<string> {
   const titleList = subList.map(v => v.title);
   if (new Set(titleList).size !== titleList.length) {
     throw new Error('标题不能重复');
+  }
+  // check qb status
+  if (!authConfig.ip || !authConfig.port) {
+    throw new Error('请先填写设置页的ip地址和端口');
+  }
+  const qbApiWrapper = new QbApiWrapper(authConfig);
+  await qbApiWrapper.login();
+  const rssLinkList = await qbApiWrapper.rssGetAllLink();
+  const subItemLinkList = subList.map(v => v.link);
+  const sameLinkList = _.intersection(rssLinkList, subItemLinkList);
+  if (sameLinkList.length > 0) {
+    throw new Error(
+      `qb 中含有相同地址的 rss 订阅：${sameLinkList.join(' ; ')}`,
+    );
+  }
+  const ruleList = await qbApiWrapper.rssRuleGetAll();
+  const ruleTitleList = Object.keys(ruleList);
+  const sameTitleList = _.intersection(ruleTitleList, titleList);
+  if (sameTitleList.length > 0) {
+    throw new Error(
+      `qb 中含有相同标题的下载规则：${sameTitleList.join(' ; ')}`,
+    );
   }
 
   // get dir path
@@ -91,9 +119,20 @@ export async function exportRuleFile(subList: SubItem[]): Promise<string> {
     return '';
   }
 
-  // generate rule obj
-  const ruleRecord: Record<string, object> = {};
-  for (const subItem of subList) {
+  // write files
+  const taskList = titleList.map(async title => {
+    const curPath = path.join(dirPath, title);
+    const isExisted = await exists(curPath);
+    if (!isExisted) {
+      await createDir(curPath);
+    }
+  });
+  await Promise.all(taskList);
+
+  // inject rss and rule
+  const rssTaskList = subItemLinkList.map(v => qbApiWrapper.rssAdd(v));
+  await Promise.all(rssTaskList);
+  const ruleTaskList = subList.map(subItem => {
     const { link, title, mustContain, mustNotContain, useRegex } = subItem;
     const rule: RSSDownloadRule = {
       addPaused: false,
@@ -102,7 +141,6 @@ export async function exportRuleFile(subList: SubItem[]): Promise<string> {
       enabled: true,
       episodeFilter: '',
       ignoreDays: 0,
-      // TODO: check
       lastMatch: '',
       mustContain,
       mustNotContain,
@@ -111,24 +149,9 @@ export async function exportRuleFile(subList: SubItem[]): Promise<string> {
       smartFilter: false,
       useRegex,
     };
-    ruleRecord[title] = rule;
-  }
+    return qbApiWrapper.rssRuleAdd(title, rule);
+  });
+  await Promise.all(ruleTaskList);
 
-  // write files
-  const linkText = subList.map(v => `${v.title}\n${v.link}`).join('\n');
-  await writeTextFile(`${dirPath}\\rule.json`, JSON.stringify(ruleRecord), {
-    append: false,
-  });
-  await writeTextFile(`${dirPath}\\link.txt`, linkText, {
-    append: false,
-  });
-  const taskList = titleList.map(async title => {
-    const path = `${dirPath}\\${title}`;
-    const isExisted = await exists(path);
-    if (!isExisted) {
-      await createDir(path);
-    }
-  });
-  await Promise.all(taskList);
   return '导出数据成功';
 }
