@@ -37,7 +37,7 @@ export const useIndexStore = create<IndexState>()(
             selectedLink: link,
           });
         },
-        addSubItem(subItem: SubItem) {
+        addSubItem(subItem) {
           const newSubList = [...get().subList, subItem];
           set({ subList: newSubList });
         },
