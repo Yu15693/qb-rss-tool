@@ -7,7 +7,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "tauri-mikan",
+    "productName": "qb-rss-tool",
     "version": "0.1.0"
   },
   "tauri": {
@@ -52,8 +52,8 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.yu15693.tauri-mikan",
-      "longDescription": "",
+      "identifier": "com.yu15693.qb-rss-tool",
+      "longDescription": "用于辅助qbittorrent的RSS自动下载功能的轻量级工具",
       "macOS": {
         "entitlements": null,
         "exceptionDomain": "",
@@ -62,7 +62,7 @@
         "signingIdentity": null
       },
       "resources": [],
-      "shortDescription": "tauri-mikan",
+      "shortDescription": "qb-rss-tool",
       "targets": "all",
       "windows": {
         "certificateThumbprint": null,
@@ -85,7 +85,7 @@
         "height": 720,
         "center": true,
         "resizable": true,
-        "title": "tauri-mikan",
+        "title": "qb-rss-tool",
         "width": 1200
       }
     ]

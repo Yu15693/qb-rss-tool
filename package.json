@@ -1,9 +1,9 @@
 {
-  "name": "tauri-mikan",
+  "name": "qb-rss-tool",
   "version": "0.1.0",
   "author": "Yu15693 <yugreyson18@gmail.com>",
-  "homepage": "https://github.com/Yu15693/tauri-mikan#readme",
-  "repository": "https://github.com/Yu15693/tauri-mikan",
+  "homepage": "https://github.com/Yu15693/qb-rss-tool#readme",
+  "repository": "https://github.com/Yu15693/qb-rss-tool",
   "scripts": {
     "reset": "npx rimraf ./**/node_modules",
     "dev": "modern dev",
