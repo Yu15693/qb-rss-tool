@@ -45,7 +45,7 @@ export default function SettingsPage() {
   };
 
   return (
-    <Box component="form" width={516} onSubmit={handleSubmit(onSubmit)}>
+    <Box component="form" width={616} onSubmit={handleSubmit(onSubmit)}>
       <Stack gap={2}>
         <Stack direction="row" justifyContent="space-between">
           <Typography variant="h6">qbittorrent web ui 配置</Typography>
@@ -58,14 +58,14 @@ export default function SettingsPage() {
             label="IP地址"
             type="text"
             size="small"
-            sx={{ width: 400 }}
+            sx={{ width: 480 }}
             {...register('ip')}
           />
           <TextField
             label="端口"
             type="number"
             size="small"
-            sx={{ width: 100 }}
+            sx={{ width: 120 }}
             {...register('port')}
           />
         </Stack>
@@ -74,14 +74,14 @@ export default function SettingsPage() {
             label="用户名"
             type="text"
             size="small"
-            sx={{ width: 250 }}
+            sx={{ width: 300 }}
             {...register('username')}
           />
           <TextField
             label="密码"
             type={showPassword ? 'text' : 'password'}
             size="small"
-            sx={{ width: 250 }}
+            sx={{ width: 300 }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">

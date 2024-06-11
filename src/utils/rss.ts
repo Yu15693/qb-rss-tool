@@ -83,8 +83,13 @@ export async function injectRuleData(
   if (!authConfig.ip || !authConfig.port) {
     throw new Error('请先填写设置页的ip地址和端口');
   }
+
   const qbApiWrapper = new QbApiWrapper(authConfig);
   await qbApiWrapper.login();
+  const version = await qbApiWrapper.getVersion();
+  const apiVersion = await qbApiWrapper.getApiVersion();
+  console.log('version', version, 'api version', apiVersion);
+
   const rssLinkList = await qbApiWrapper.rssGetAllLink();
   const subItemLinkList = subList.map(v => v.link);
   const sameLinkList = _.intersection(rssLinkList, subItemLinkList);

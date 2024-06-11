@@ -35,6 +35,32 @@ export class QbApiWrapper {
     this.cookieSID = loginRes.headers['set-cookie'].split(';')[0];
   }
 
+  async getVersion() {
+    const path = '/app/version';
+    const res = await fetch<string>(this.urlPrefix + path, {
+      method: 'GET',
+      timeout: 10000,
+      responseType: ResponseType.Text,
+      headers: {
+        cookie: this.cookieSID,
+      },
+    });
+    return res.data;
+  }
+
+  async getApiVersion() {
+    const path = '/app/webapiVersion';
+    const res = await fetch<string>(this.urlPrefix + path, {
+      method: 'GET',
+      timeout: 10000,
+      responseType: ResponseType.Text,
+      headers: {
+        cookie: this.cookieSID,
+      },
+    });
+    return res.data;
+  }
+
   async rssGetAll() {
     const path = '/rss/items';
     const res = await fetch<Record<string, any>>(this.urlPrefix + path, {
