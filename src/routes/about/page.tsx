@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { Box } from '@mui/material';
 import ContentMDX from '@/views/about/content.mdx';
 
 const ContentMDXComponent = ContentMDX as FC<{
@@ -7,13 +8,15 @@ const ContentMDXComponent = ContentMDX as FC<{
   appName: string;
 }>;
 
-// TODO: 完善关于信息
 export default function AboutPage() {
   return (
-    <ContentMDXComponent
-      repoLink={__APP_REPOSITORY__}
-      version={__APP_VERSION__}
-      appName={__APP_NAME__}
-    />
+    <>
+      <ContentMDXComponent
+        repoLink={__APP_REPOSITORY__}
+        version={__APP_VERSION__}
+        appName={__APP_NAME__}
+      />
+      <Box height={30} />
+    </>
   );
 }

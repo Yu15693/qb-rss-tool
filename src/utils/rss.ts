@@ -114,8 +114,8 @@ export async function injectRuleData(
   if (!dirPath || Array.isArray(dirPath)) {
     return '';
   }
-  const confirmed = await confirm(`导出路径为 ${dirPath} ,你确定吗？`, {
-    title: '请确认导出路径',
+  const confirmed = await confirm(`存储路径为 ${dirPath} ,你确定吗？`, {
+    title: '请确认存储路径',
     type: 'info',
     okLabel: '确定',
     cancelLabel: '取消',
