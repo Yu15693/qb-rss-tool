@@ -3,6 +3,7 @@ import {
   Button,
   CircularProgress,
   IconButton,
+  InputAdornment,
   Stack,
   TextField,
 } from '@mui/material';
@@ -108,17 +109,21 @@ export default function IndexHeader() {
               fullWidth
               {...field}
               InputProps={{
-                endAdornment: value ? (
-                  <IconButton
-                    title="清空"
-                    onClick={() => onChange({ target: { value: '' } })}
-                  >
-                    <IconClearOutlined />
-                  </IconButton>
-                ) : (
-                  <IconButtonPaste
-                    onPaste={value => onChange({ target: { value } })}
-                  />
+                endAdornment: (
+                  <InputAdornment position="end">
+                    {value ? (
+                      <IconButton
+                        title="清空"
+                        onClick={() => onChange({ target: { value: '' } })}
+                      >
+                        <IconClearOutlined />
+                      </IconButton>
+                    ) : (
+                      <IconButtonPaste
+                        onPaste={value => onChange({ target: { value } })}
+                      />
+                    )}
+                  </InputAdornment>
                 ),
               }}
             />

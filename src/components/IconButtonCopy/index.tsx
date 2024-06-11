@@ -35,8 +35,8 @@ export default function IconButtonCopy(props: IProps) {
   return (
     <Tooltip title="已复制" open={isDone}>
       <IconButton {...buttonProps} onClick={onCopy}>
-        {isDone && <IconCheck />}
-        {!isDone && <IconCopy />}
+        {isDone && <IconCheck fontSize="inherit" />}
+        {!isDone && <IconCopy fontSize="inherit" />}
       </IconButton>
     </Tooltip>
   );

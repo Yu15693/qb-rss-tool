@@ -23,7 +23,7 @@ export default function IconButtonPaste(props: IProps) {
 
   return (
     <IconButton {...buttonProps} title="粘贴" onClick={onCopy}>
-      <IconPaste />
+      <IconPaste fontSize="inherit" />
     </IconButton>
   );
 }

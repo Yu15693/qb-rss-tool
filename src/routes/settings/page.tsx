@@ -1,6 +1,19 @@
-import { Box, Button, Stack, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  IconButton,
+  InputAdornment,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
+import { useState } from 'react';
+import {
+  Visibility as IconVisibility,
+  VisibilityOff as IconVisibilityOff,
+} from '@mui/icons-material';
 import { useSettingsStore } from '@/views/settings/store';
 
 interface IForm {
@@ -13,6 +26,7 @@ interface IForm {
 export default function SettingsPage() {
   const { enqueueSnackbar } = useSnackbar();
   const settingsStore = useSettingsStore();
+  const [showPassword, setShowPassword] = useState(false);
 
   const { register, handleSubmit } = useForm<IForm>({
     defaultValues: {
@@ -65,9 +79,25 @@ export default function SettingsPage() {
           />
           <TextField
             label="密码"
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             size="small"
             sx={{ width: 250 }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    size="small"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <IconVisibilityOff fontSize="inherit" />
+                    ) : (
+                      <IconVisibility fontSize="inherit" />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
             {...register('password')}
           />
         </Stack>
