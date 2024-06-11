@@ -27,6 +27,7 @@ export default function IconButtonCopy(props: IProps) {
         }, 2000);
       })
       .catch(err => {
+        // TODO: record
         console.error(err);
       });
   };

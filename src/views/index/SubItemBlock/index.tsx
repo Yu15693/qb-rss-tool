@@ -15,6 +15,7 @@ export default function SubItemBlock() {
         <Tooltip
           title={
             <Box>
+              <Box>标题将作为生成的文件夹名称、下载规则名称</Box>
               <Box>通配符模式：规则与qb内保持一致</Box>
               <Box>? 匹配任意单个字符</Box>
               <Box>* 匹配0个或多个任意字符</Box>

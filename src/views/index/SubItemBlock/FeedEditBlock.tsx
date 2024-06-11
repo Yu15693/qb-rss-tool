@@ -15,7 +15,7 @@ export default function FeedEditBlock() {
   });
 
   const { run: syncTempValue } = useDebounceFn(
-    (link: string, value: typeof tempValue) => {
+    (link: string, value: Partial<typeof tempValue>) => {
       indexStore.editSubItem(link, value);
     },
     { wait: 200 },

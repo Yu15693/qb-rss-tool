@@ -16,6 +16,7 @@ export default function IconButtonPaste(props: IProps) {
         res && onPaste(res);
       })
       .catch(err => {
+        // TODO: record
         console.error(err);
       });
   };

@@ -58,7 +58,7 @@ export async function fetchRSS(url: string) {
   return rssObj as unknown as RSSFeed;
 }
 
-export async function exportRuleFile(
+export async function injectRuleData(
   authConfig: AuthConfig,
   subList: SubItem[],
 ): Promise<string> {
