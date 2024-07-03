@@ -1,11 +1,11 @@
 [package]
-name = "app"
+name = "qb-rss-tool"
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
+description = "用于辅助qbittorrent的RSS自动下载功能的轻量级工具"
+authors = ["Yu15693 <yugreyson18@gmail.com>"]
 license = ""
-repository = ""
-default-run = "app"
+repository = "https://github.com/Yu15693/qb-rss-tool"
+default-run = "qb-rss-tool"
 edition = "2021"
 rust-version = "1.60"
 
@@ -17,10 +17,19 @@ tauri-build = { version = "1.5.1", features = [] }
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.6.2", features = [ "shell-all", "dialog-confirm", "clipboard-all", "fs-create-dir", "fs-exists", "fs-write-file", "dialog-open", "http-request"] }
+tauri = { version = "1.6.2", features = [
+    "shell-all",
+    "dialog-confirm",
+    "clipboard-all",
+    "fs-create-dir",
+    "fs-exists",
+    "fs-write-file",
+    "dialog-open",
+    "http-request",
+] }
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem and the built-in dev server is disabled.
 # If you use cargo directly instead of tauri's cli you can use this feature flag to switch between tauri's `dev` and `build` modes.
 # DO NOT REMOVE!!
-custom-protocol = [ "tauri/custom-protocol" ]
+custom-protocol = ["tauri/custom-protocol"]
