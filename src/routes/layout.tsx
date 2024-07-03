@@ -1,8 +1,14 @@
 import { Outlet } from '@modern-js/runtime/router';
 import { Box } from '@mui/material';
 import { SnackbarProvider } from 'notistack';
+import { attachConsole } from 'tauri-plugin-log-api';
 import Theme from '@/views/layout/Theme';
 import Sidebar from '@/views/layout/Sidebar';
+import { isDev } from '@/utils/env';
+
+if (isDev) {
+  attachConsole();
+}
 
 export default function Layout() {
   return (

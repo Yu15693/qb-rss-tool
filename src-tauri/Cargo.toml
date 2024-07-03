@@ -27,6 +27,10 @@ tauri = { version = "1.6.2", features = [
     "dialog-open",
     "http-request",
 ] }
+tauri-plugin-log = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1", features = [
+    "colored",
+] }
+log = "^0.4"
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem and the built-in dev server is disabled.

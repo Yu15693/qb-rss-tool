@@ -46,6 +46,7 @@
     "react-dom": "~18.2.0",
     "react-hook-form": "^7.51.3",
     "rss-parser": "^3.13.0",
+    "tauri-plugin-log-api": "github:tauri-apps/tauri-plugin-log#v1",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
