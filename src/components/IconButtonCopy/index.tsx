@@ -5,6 +5,7 @@ import {
 } from '@mui/icons-material';
 import { useState } from 'react';
 import { writeText } from '@tauri-apps/api/clipboard';
+import { recordLog } from '@/utils/log';
 
 interface IProps {
   buttonProps?: IconButtonProps;
@@ -27,8 +28,7 @@ export default function IconButtonCopy(props: IProps) {
         }, 2000);
       })
       .catch(err => {
-        // TODO: record
-        console.error(err);
+        recordLog('error', 'onCopy', err);
       });
   };
 

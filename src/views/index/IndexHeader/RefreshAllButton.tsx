@@ -2,12 +2,14 @@ import { Button, CircularProgress } from '@mui/material';
 import { useRequest } from 'ahooks';
 import { useIndexStore } from '../store';
 import { fetchRSS } from '@/utils/rss';
+import { recordLog } from '@/utils/log';
 
 export default function RefreshAllButton() {
   const indexStore = useIndexStore();
 
   const { runAsync: doRefreshAll, loading: refreshLoading } = useRequest(
     async () => {
+      recordLog('info', 'doRefreshAll', indexStore.subList);
       const taskList = indexStore.subList.map(v => {
         indexStore.editSubItem(v.link, {
           fetchStatus: 'loading',
@@ -21,8 +23,7 @@ export default function RefreshAllButton() {
             });
           })
           .catch(err => {
-            // TODO: record log
-            console.error(err);
+            recordLog('error', 'doRefreshAll', err);
             indexStore.editSubItem(v.link, {
               fetchStatus: 'fail',
             });

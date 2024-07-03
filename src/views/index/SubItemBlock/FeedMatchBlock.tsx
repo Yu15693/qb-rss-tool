@@ -12,6 +12,7 @@ import { useMemo, useState } from 'react';
 import { Warning as IconWarning } from '@mui/icons-material';
 import { useIndexStore } from '../store';
 import { mustContainMatch, mustNotContainMatch } from '@/utils/format';
+import { recordLog } from '@/utils/log';
 
 export default function FeedMatchBlock() {
   const [isFiltered, setIsFiltered] = useState(true);
@@ -21,7 +22,7 @@ export default function FeedMatchBlock() {
   const selectedSubItem = indexStore.findSubItem(indexStore.selectedLink)!;
 
   const getMatchList = () => {
-    // TODO: test match | record log
+    // TODO: test match
     if (isFiltered) {
       try {
         const matchList = selectedSubItem.rssFeed.items.filter(v => {
@@ -38,10 +39,11 @@ export default function FeedMatchBlock() {
             )
           );
         });
+        recordLog('info', 'getMatchList', { selectedSubItem, matchList });
         isMatchError && setIsMatchError(false);
         return matchList;
       } catch (err) {
-        console.error(err);
+        recordLog('error', 'getMatchList', err);
         setIsMatchError(true);
       }
     }

@@ -17,6 +17,7 @@ import RefreshAllButton from './RefreshAllButton';
 import { fetchRSS } from '@/utils/rss';
 import { formatTitle } from '@/utils/format';
 import IconButtonPaste from '@/components/IconButtonPaste';
+import { recordLog } from '@/utils/log';
 
 interface IForm {
   rssUrl: string;
@@ -52,7 +53,7 @@ export default function IndexHeader() {
           setValue('rssUrl', '');
         })
         .catch(err => {
-          console.error(err);
+          recordLog('error', 'doFetchRSS', err);
           enqueueSnackbar({
             message: `请求失败:${err.message ?? err}`,
             variant: 'error',
@@ -65,7 +66,7 @@ export default function IndexHeader() {
   );
 
   const onSubmit = (data: IForm) => {
-    // TODO: record log
+    recordLog('info', 'IndexHeader-onSubmit', data);
     const { rssUrl } = data;
 
     if (!urlRegExp.test(rssUrl)) {

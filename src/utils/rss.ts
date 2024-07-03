@@ -6,6 +6,7 @@ import { exists, createDir } from '@tauri-apps/api/fs';
 import * as _ from 'lodash-es';
 import { fileNameLimitRegExp } from './format';
 import { QbApiWrapper } from './qb-api';
+import { recordLog } from './log';
 import { SubItem } from '@/views/index/store';
 import { AuthConfig } from '@/views/settings/store';
 
@@ -88,7 +89,7 @@ export async function injectRuleData(
   await qbApiWrapper.login();
   const version = await qbApiWrapper.getVersion();
   const apiVersion = await qbApiWrapper.getApiVersion();
-  console.log('version', version, 'api version', apiVersion);
+  recordLog('info', 'injectRuleData-qb', { version, apiVersion });
 
   const rssLinkList = await qbApiWrapper.rssGetAllLink();
   const subItemLinkList = subList.map(v => v.link);
