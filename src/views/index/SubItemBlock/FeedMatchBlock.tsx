@@ -25,21 +25,21 @@ export default function FeedMatchBlock() {
     // TODO: test match
     if (isFiltered) {
       try {
+        const { useRegex, mustContain, mustNotContain, title } =
+          selectedSubItem;
+        recordLog('info', 'getMatchList', {
+          title,
+          useRegex,
+          mustContain,
+          mustNotContain,
+        });
         const matchList = selectedSubItem.rssFeed.items.filter(v => {
           return (
-            mustContainMatch(
-              selectedSubItem.useRegex,
-              selectedSubItem.mustContain,
-              v.title,
-            ) &&
-            mustNotContainMatch(
-              selectedSubItem.useRegex,
-              selectedSubItem.mustNotContain,
-              v.title,
-            )
+            mustContainMatch(useRegex, mustContain, v.title) &&
+            mustNotContainMatch(useRegex, mustNotContain, v.title)
           );
         });
-        recordLog('info', 'getMatchList', { selectedSubItem, matchList });
+
         isMatchError && setIsMatchError(false);
         return matchList;
       } catch (err) {
