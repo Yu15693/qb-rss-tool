@@ -15,12 +15,15 @@ export function recordLog(
   switch (level) {
     case 'info':
       info(logInfo);
+      console.log(event, content);
       break;
     case 'warn':
       warn(logInfo);
+      console.warn(event, content);
       break;
     case 'error':
       error(logInfo);
+      console.error(event, content);
       break;
     default:
       console.log(logInfo);
