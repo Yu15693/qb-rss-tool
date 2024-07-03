@@ -1,7 +1,7 @@
 import { Button, CircularProgress } from '@mui/material';
 import { useRequest } from 'ahooks';
 import { useSnackbar } from 'notistack';
-import { useIndexStore } from '../store';
+import { getSlimSubList, useIndexStore } from '../store';
 import { injectRuleData } from '@/utils/rss';
 import { useSettingsStore } from '@/views/settings/store';
 import { recordLog } from '@/utils/log';
@@ -13,7 +13,10 @@ export default function InjectDataButton() {
 
   const { runAsync: doExportData, loading: exportDataLoading } = useRequest(
     () => {
-      recordLog('info', 'doExportData', { authConfig, subList });
+      recordLog('info', 'doExportData', {
+        authConfig,
+        subList: getSlimSubList(subList),
+      });
       return injectRuleData(authConfig, subList)
         .then(res => {
           res &&

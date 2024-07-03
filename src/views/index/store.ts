@@ -85,3 +85,12 @@ export const useIndexStore = create<IndexState>()(
  version 1
  Interface SubItem add fields: fetchTime fetchStatus
 */
+
+export function getSlimSubList(subList: SubItem[]) {
+  return subList.map(v => {
+    return {
+      ...v,
+      rssFeed: null,
+    };
+  });
+}

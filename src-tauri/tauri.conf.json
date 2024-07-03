@@ -27,13 +27,18 @@
         "all": false,
         "exists": true,
         "createDir": true,
+        "readDir": true,
         "writeFile": true,
-        "scope": []
+        "readFile": true,
+        "scope": ["$APPLOG", "$APPLOG/*"]
       },
       "clipboard": {
         "all": true
       },
       "shell": {
+        "all": true
+      },
+      "path": {
         "all": true
       }
     },
