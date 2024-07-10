@@ -52,4 +52,7 @@ export default defineConfig({
     disableNodePolyfill: false,
     disableSourceMap: process.env.NODE_ENV === 'production',
   },
+  performance: {
+    transformLodash: false,
+  },
 });
