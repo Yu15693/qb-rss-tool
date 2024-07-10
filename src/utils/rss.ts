@@ -3,7 +3,7 @@ import RSSParser from 'rss-parser';
 import { ResponseType, fetch } from '@tauri-apps/api/http';
 import { open, confirm } from '@tauri-apps/api/dialog';
 import { exists, createDir } from '@tauri-apps/api/fs';
-import * as _ from 'lodash-es';
+import { intersection } from 'lodash-es';
 import { fileNameLimitRegExp } from './format';
 import { QbApiWrapper } from './qb-api';
 import { recordLog } from './log';
@@ -93,7 +93,7 @@ export async function injectRuleData(
 
   const rssLinkList = await qbApiWrapper.rssGetAllLink();
   const subItemLinkList = subList.map(v => v.link);
-  const sameLinkList = _.intersection(rssLinkList, subItemLinkList);
+  const sameLinkList = intersection(rssLinkList, subItemLinkList);
   if (sameLinkList.length > 0) {
     throw new Error(
       `qb 中含有相同地址的 rss 订阅：${sameLinkList.join(' ; ')}`,
@@ -101,7 +101,7 @@ export async function injectRuleData(
   }
   const ruleList = await qbApiWrapper.rssRuleGetAll();
   const ruleTitleList = Object.keys(ruleList);
-  const sameTitleList = _.intersection(ruleTitleList, titleList);
+  const sameTitleList = intersection(ruleTitleList, titleList);
   if (sameTitleList.length > 0) {
     throw new Error(
       `qb 中含有相同标题的下载规则：${sameTitleList.join(' ; ')}`,
